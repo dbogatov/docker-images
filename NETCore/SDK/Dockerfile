@@ -5,6 +5,4 @@ RUN apt-get install -y nodejs
 
 RUN npm install -g gulp bower broken-link-checker
 
-RUN wget http://binaries.html-tidy.org/binaries/tidy-5.2.0/tidy-5.2.0-64bit.deb
-RUN dpkg -i tidy-5.2.0-64bit.deb
-RUN rm tidy-5.2.0-64bit.deb
+RUN wget http://binaries.html-tidy.org/binaries/tidy-5.2.0/tidy-5.2.0-64bit.deb && dpkg -i tidy-5.2.0-64bit.deb && rm tidy-5.2.0-64bit.deb
