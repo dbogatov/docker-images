@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:1.1-sdk-msbuild
 
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y nodejs doxygen
 
 RUN npm install -g gulp bower broken-link-checker
 
