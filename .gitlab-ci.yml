@@ -4,7 +4,7 @@ stages:
   - release
 
 before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN rregistry.dbogatov.org
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.dbogatov.org
 
 variables:
   DOTNETCORE_SDK_TEST: registry.dbogatov.org/dbogatov/docker-containers:dotnet-core-$CI_BUILD_REF_NAME
