@@ -1,0 +1,38 @@
+stages:
+  - build
+  - test
+  - release
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN rregistry.dbogatov.org
+
+variables:
+  DOTNETCORE_SDK_TEST: registry.dbogatov.org/dbogatov/docker-containers:dotnet-core-$CI_BUILD_REF_NAME
+  DOTNETCORE_SDK_RELEASE: registry.dbogatov.org/dbogatov/docker-containers:dotnet-core-latest
+
+dotnetcore-sdk-build:
+  stage: build
+  script:
+    - docker build --pull -t $DOTNETCORE_SDK_TEST NETCore/SDK
+    - docker push $DOTNETCORE_SDK_TEST
+  tags:
+    - shell
+
+dotnetcore-sdk-test:
+  stage: test
+  script:
+    - docker pull $DOTNETCORE_SDK_TEST
+    - docker run -v $CI_PROJECT_DIR/NETCore/SDK/test.sh:/test.sh --entrypoint="/bin/bash" $DOTNETCORE_SDK_TEST /test.sh
+  tags:
+    - shell
+
+dotnetcore-sdk-release:
+  stage: release
+  script:
+    - docker pull $DOTNETCORE_SDK_TEST
+    - docker tag $DOTNETCORE_SDK_TEST $DOTNETCORE_SDK_RELEASE
+    - docker push $DOTNETCORE_SDK_RELEASE
+  only:
+    - master
+  tags:
+    - shell
