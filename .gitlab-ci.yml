@@ -16,7 +16,7 @@ dotnetcore-sdk-build:
     - docker build --pull -t $DOTNETCORE_SDK_TEST NETCore/SDK
     - docker push $DOTNETCORE_SDK_TEST
   tags:
-    - shell
+    - Shell
 
 dotnetcore-sdk-test:
   stage: test
@@ -24,7 +24,7 @@ dotnetcore-sdk-test:
     - docker pull $DOTNETCORE_SDK_TEST
     - docker run -v $CI_PROJECT_DIR/NETCore/SDK/test.sh:/test.sh --entrypoint="/bin/bash" $DOTNETCORE_SDK_TEST /test.sh
   tags:
-    - shell
+    - Shell
 
 dotnetcore-sdk-release:
   stage: release
@@ -35,4 +35,4 @@ dotnetcore-sdk-release:
   only:
     - master
   tags:
-    - shell
+    - Shell
