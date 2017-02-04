@@ -23,7 +23,7 @@ RUN apk upgrade --update \
  	&& apk search --update
 
 # Install gloabally Gulp task runner, Bower front-end manager and Broken Link Checker tool
-RUN npm install -g gulp bower broken-link-checker
+RUN npm install -g gulp bower broken-link-checker http-server
 
 # Install HTML Tidy for W3C Validation
 RUN apk add tidyhtml
