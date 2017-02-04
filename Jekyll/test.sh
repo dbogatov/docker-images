@@ -10,3 +10,4 @@ bower --version
 blc --version
 tidy --version
 bundle --version
+http-server --help > /dev/null
