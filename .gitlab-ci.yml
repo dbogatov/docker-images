@@ -7,8 +7,14 @@ before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.dbogatov.org
 
 variables:
+
   DOTNETCORE_SDK_TEST: registry.dbogatov.org/dbogatov/docker-containers:dotnet-core-$CI_BUILD_REF_NAME
   DOTNETCORE_SDK_RELEASE: registry.dbogatov.org/dbogatov/docker-containers:dotnet-core-latest
+
+  JEKYLL_TEST: registry.dbogatov.org/dbogatov/docker-containers:jekyll-$CI_BUILD_REF_NAME
+  JEKYLL_RELEASE: registry.dbogatov.org/dbogatov/docker-containers:jekyll-latest
+
+### .NET Core SDK
 
 dotnetcore-sdk-build:
   stage: build
@@ -32,6 +38,35 @@ dotnetcore-sdk-release:
     - docker pull $DOTNETCORE_SDK_TEST
     - docker tag $DOTNETCORE_SDK_TEST $DOTNETCORE_SDK_RELEASE
     - docker push $DOTNETCORE_SDK_RELEASE
+  only:
+    - master
+  tags:
+    - Shell
+
+### Jekyll
+
+jekyll-build:
+  stage: build
+  script:
+    - docker build --pull -t $JEKYLL_TEST Jekyll
+    - docker push $JEKYLL_TEST
+  tags:
+    - Shell
+
+jekyll-test:
+  stage: test
+  script:
+    - docker pull $JEKYLL_TEST
+    - docker run -v $CI_PROJECT_DIR/Jekyll/test.sh:/test.sh --entrypoint="/bin/bash" $JEKYLL_TEST /test.sh
+  tags:
+    - Shell
+
+jekyll-release:
+  stage: release
+  script:
+    - docker pull $JEKYLL_TEST
+    - docker tag $JEKYLL_TEST $JEKYLL_RELEASE
+    - docker push $JEKYLL_RELEASE
   only:
     - master
   tags:

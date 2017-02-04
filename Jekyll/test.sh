@@ -3,11 +3,10 @@ set -e
 
 # Script to test the image
 
-dotnet --version
+jekyll --version
 nodejs --version
 npm --version
 gulp --version
 bower --version
 blc --version
-doxygen --version
 tidy --version
