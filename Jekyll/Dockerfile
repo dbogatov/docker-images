@@ -6,7 +6,7 @@ RUN apk upgrade --update \
 		apk add libatomic readline readline-dev libxml2 libxml2-dev \
 		ncurses-terminfo-base ncurses-terminfo \
 		libxslt libxslt-dev zlib-dev zlib \
-		ruby ruby-dev yaml yaml-dev ruby-devel \
+		ruby ruby-dev yaml yaml-dev ruby-dev \
 		libffi-dev build-base git nodejs \
 		ruby-io-console ruby-irb ruby-json ruby-rake bash \
 	&& gem install --no-document redcarpet kramdown maruku rdiscount RedCloth liquid pygments.rb \
