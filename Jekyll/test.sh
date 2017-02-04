@@ -4,7 +4,6 @@ set -e
 # Script to test the image
 
 jekyll --version
-nodejs --version
 npm --version
 gulp --version
 bower --version
