@@ -9,3 +9,4 @@ gulp --version
 bower --version
 blc --version
 tidy --version
+bundle --version
