@@ -14,6 +14,7 @@ RUN apk upgrade --update \
 	&& gem install --no-document jekyll \
 	&& gem install --no-document jekyll-paginate jekyll-sass-converter \
 	&& gem install --no-document jekyll-sitemap jekyll-feed jekyll-redirect-from \
+	&& gem install --no-document bundle \
 	&& rm -rf /root/src /tmp/* /usr/share/man /var/cache/apk/* \
 	&& \
 		apk del build-base zlib-dev ruby-dev readline-dev \
