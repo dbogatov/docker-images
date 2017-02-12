@@ -7,7 +7,7 @@ RUN apk upgrade --update \
 		ncurses-terminfo-base ncurses-terminfo \
 		libxslt libxslt-dev zlib-dev zlib \
 		ruby ruby-dev yaml yaml-dev ruby-dev \
-		libffi-dev build-base git nodejs python3 \
+		libffi-dev build-base git nodejs curl \
 		ruby-io-console ruby-irb ruby-json ruby-rake bash \
 	&& gem install --no-document redcarpet kramdown maruku rdiscount RedCloth liquid pygments.rb \
 	&& gem install --no-document sass safe_yaml \        
