@@ -26,6 +26,3 @@ COPY run.sh /
 
 # expose both the HTTP (80) and HTTPS (443) ports
 EXPOSE 80 443
-
-# Entry point
-CMD ["/bin/bash", "-c", "/run.sh"] 
