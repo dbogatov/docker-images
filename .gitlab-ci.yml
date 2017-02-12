@@ -83,7 +83,7 @@ jekyll-release:
 nginx-build:
   stage: build
   script:
-    - docker build --pull -t $NGINX_TEST Jekyll
+    - docker build --pull -t $NGINX_TEST NGINX
     - docker push $NGINX_TEST
   tags:
     - Shell
