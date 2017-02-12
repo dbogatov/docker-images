@@ -2,6 +2,8 @@ FROM alpine:latest
 
 MAINTAINER Dmytro Bogatov dmytro@dbogatov.org
 
+# Install all packages and clear cache
+# Create directories for PID and sockets
 RUN apk --update add nginx bash ca-certificates s6 curl ssmtp \
 	\
 	php7 php7-phar php7-curl php7-fpm php7-json php7-zlib php7-xml php7-dom \
@@ -16,10 +18,10 @@ RUN apk --update add nginx bash ca-certificates s6 curl ssmtp \
 	mkdir -p /run/nginx && \
 	mkdir -p /run/php
 
-COPY default.conf /etc/nginx/conf.d/
-
+# Copy PHP config. Use socket, not port
 COPY www.conf /etc/php7/php-fpm.d/
 
+# Copy startup script
 COPY run.sh /
 
 # expose both the HTTP (80) and HTTPS (443) ports

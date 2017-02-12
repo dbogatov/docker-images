@@ -17,6 +17,9 @@ variables:
   JEKYLL_TEST: $IMAGE:jekyll-$CI_BUILD_REF_NAME
   JEKYLL_RELEASE: $IMAGE:jekyll-latest
 
+  NGINX_TEST: $IMAGE:nginx-$CI_BUILD_REF_NAME
+  NGINX_RELEASE: $IMAGE:nginx-latest
+
 ### .NET Core SDK
 
 dotnetcore-sdk-build:
@@ -70,6 +73,35 @@ jekyll-release:
     - docker pull $JEKYLL_TEST
     - docker tag $JEKYLL_TEST $JEKYLL_RELEASE
     - docker push $JEKYLL_RELEASE
+  only:
+    - master
+  tags:
+    - Shell
+
+### NGINX
+
+nginx-build:
+  stage: build
+  script:
+    - docker build --pull -t $NGINX_TEST Jekyll
+    - docker push $NGINX_TEST
+  tags:
+    - Shell
+
+nginx-test:
+  stage: test
+  script:
+    - docker pull $NGINX_TEST
+    - docker run -v $CI_PROJECT_DIR/NGINX/test.sh:/test.sh --entrypoint="/bin/bash" $NGINX_TEST /test.sh
+  tags:
+    - Shell
+
+nginx-release:
+  stage: release
+  script:
+    - docker pull $NGINX_TEST
+    - docker tag $NGINX_TEST $NGINX_RELEASE
+    - docker push $NGINX_RELEASE
   only:
     - master
   tags:

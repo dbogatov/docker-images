@@ -2,4 +2,4 @@
 
 In this image:
 * NGINX (recent version)
-* PHP 7
+* PHP 7 + FPM
