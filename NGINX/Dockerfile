@@ -21,8 +21,5 @@ RUN apk --update add nginx bash ca-certificates s6 curl ssmtp \
 # Copy PHP config. Use socket, not port
 COPY www.conf /etc/php7/php-fpm.d/
 
-# Copy startup script
-COPY run.sh /
-
 # expose both the HTTP (80) and HTTPS (443) ports
 EXPOSE 80 443
