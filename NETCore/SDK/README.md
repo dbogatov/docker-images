@@ -8,3 +8,4 @@ In this image:
 * Bower (latest on NPM)
 * Broken Link Checker (latest on NPM)
 * HTML Tidy 5.2.0
+* Yarn
