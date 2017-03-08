@@ -10,7 +10,7 @@ RUN apt-get install -y nodejs doxygen
 RUN npm install -g gulp bower broken-link-checker
 
 # Install HTML Tidy for W3C Validation
-RUN wget http://binaries.html-tidy.org/binaries/tidy-5.2.0/tidy-5.2.0-64bit.deb && dpkg -i tidy-5.2.0-64bit.deb && rm tidy-5.2.0-64bit.deb
+RUN wget https://github.com/htacg/tidy-html5/releases/download/5.4.0/tidy-5.4.0-64bit.deb && dpkg -i tidy-5.4.0-64bit.deb && rm tidy-5.4.0-64bit.deb
 
 # Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
