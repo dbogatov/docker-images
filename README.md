@@ -1,6 +1,6 @@
 # Docker Containers
 
-This repo is a home for the images I use in my build system.
+This repo is a home for the images I use in my own build system.
 
 ## Structure
 
