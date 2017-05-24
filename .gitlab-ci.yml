@@ -17,6 +17,9 @@ variables:
   JEKYLL_TEST: $IMAGE:jekyll-$CI_BUILD_REF_NAME
   JEKYLL_RELEASE: $IMAGE:jekyll-latest
 
+  MKDOCS_TEST: $IMAGE:mkdocs-$CI_BUILD_REF_NAME
+  MKDOCS_RELEASE: $IMAGE:mkdocs-latest
+
   NGINX_TEST: $IMAGE:nginx-$CI_BUILD_REF_NAME
   NGINX_RELEASE: $IMAGE:nginx-latest
 
@@ -73,6 +76,35 @@ jekyll-release:
     - docker pull $JEKYLL_TEST
     - docker tag $JEKYLL_TEST $JEKYLL_RELEASE
     - docker push $JEKYLL_RELEASE
+  only:
+    - master
+  tags:
+    - Shell
+
+### MkDocs
+
+mkdocs-build:
+  stage: build
+  script:
+    - docker build --pull -t $MKDOCS_TEST MkDocs
+    - docker push $MKDOCS_TEST
+  tags:
+    - Shell
+
+mkdocs-test:
+  stage: test
+  script:
+    - docker pull $MKDOCS_TEST
+    - docker run -v $CI_PROJECT_DIR/MkDocs/test.sh:/test.sh --entrypoint="/bin/bash" $MKDOCS_TEST /test.sh
+  tags:
+    - Shell
+
+mkdocs-release:
+  stage: release
+  script:
+    - docker pull $MKDOCS_TEST
+    - docker tag $MKDOCS_TEST $MKDOCS_RELEASE
+    - docker push $MKDOCS_RELEASE
   only:
     - master
   tags:
