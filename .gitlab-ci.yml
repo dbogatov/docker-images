@@ -152,7 +152,7 @@ debian-build:
   tags:
     - shell
 
-nginx-test:
+debian-test:
   stage: test
   script:
     - docker pull $DEBIAN_TEST
@@ -160,7 +160,7 @@ nginx-test:
   tags:
     - shell
 
-nginx-release:
+debian-release:
   stage: release
   script:
     - docker pull $DEBIAN_TEST
