@@ -23,6 +23,9 @@ variables:
   NGINX_TEST: $IMAGE:nginx-$CI_BUILD_REF_NAME
   NGINX_RELEASE: $IMAGE:nginx-latest
 
+  DEBIAN_TEST: $IMAGE:debian-$CI_BUILD_REF_NAME
+  DEBIAN_RELEASE: $IMAGE:debian-latest
+
 ### .NET Core SDK
 
 dotnetcore-sdk-build:
@@ -31,7 +34,7 @@ dotnetcore-sdk-build:
     - docker build --pull -t $DOTNETCORE_SDK_TEST NETCore/SDK
     - docker push $DOTNETCORE_SDK_TEST
   tags:
-    - Shell
+    - shell
 
 dotnetcore-sdk-test:
   stage: test
@@ -39,7 +42,7 @@ dotnetcore-sdk-test:
     - docker pull $DOTNETCORE_SDK_TEST
     - docker run -v $CI_PROJECT_DIR/NETCore/SDK/test.sh:/test.sh --entrypoint="/bin/bash" $DOTNETCORE_SDK_TEST /test.sh
   tags:
-    - Shell
+    - shell
 
 dotnetcore-sdk-release:
   stage: release
@@ -50,7 +53,7 @@ dotnetcore-sdk-release:
   only:
     - master
   tags:
-    - Shell
+    - shell
 
 ### Jekyll
 
@@ -60,7 +63,7 @@ jekyll-build:
     - docker build --pull -t $JEKYLL_TEST Jekyll
     - docker push $JEKYLL_TEST
   tags:
-    - Shell
+    - shell
 
 jekyll-test:
   stage: test
@@ -68,7 +71,7 @@ jekyll-test:
     - docker pull $JEKYLL_TEST
     - docker run -v $CI_PROJECT_DIR/Jekyll/test.sh:/test.sh --entrypoint="/bin/bash" $JEKYLL_TEST /test.sh
   tags:
-    - Shell
+    - shell
 
 jekyll-release:
   stage: release
@@ -79,7 +82,7 @@ jekyll-release:
   only:
     - master
   tags:
-    - Shell
+    - shell
 
 ### MkDocs
 
@@ -89,7 +92,7 @@ mkdocs-build:
     - docker build --pull -t $MKDOCS_TEST MkDocs
     - docker push $MKDOCS_TEST
   tags:
-    - Shell
+    - shell
 
 mkdocs-test:
   stage: test
@@ -97,7 +100,7 @@ mkdocs-test:
     - docker pull $MKDOCS_TEST
     - docker run -v $CI_PROJECT_DIR/MkDocs/test.sh:/test.sh --entrypoint="/bin/bash" $MKDOCS_TEST /test.sh
   tags:
-    - Shell
+    - shell
 
 mkdocs-release:
   stage: release
@@ -108,7 +111,7 @@ mkdocs-release:
   only:
     - master
   tags:
-    - Shell
+    - shell
 
 ### NGINX
 
@@ -118,7 +121,7 @@ nginx-build:
     - docker build --pull -t $NGINX_TEST NGINX
     - docker push $NGINX_TEST
   tags:
-    - Shell
+    - shell
 
 nginx-test:
   stage: test
@@ -126,7 +129,7 @@ nginx-test:
     - docker pull $NGINX_TEST
     - docker run -v $CI_PROJECT_DIR/NGINX/test.sh:/test.sh --entrypoint="/bin/bash" $NGINX_TEST /test.sh
   tags:
-    - Shell
+    - shell
 
 nginx-release:
   stage: release
@@ -137,4 +140,33 @@ nginx-release:
   only:
     - master
   tags:
-    - Shell
+    - shell
+
+### Debian
+
+debian-build:
+  stage: build
+  script:
+    - docker build --pull -t $DEBIAN_TEST NGINX
+    - docker push $DEBIAN_TEST
+  tags:
+    - shell
+
+nginx-test:
+  stage: test
+  script:
+    - docker pull $DEBIAN_TEST
+    - docker run -v $CI_PROJECT_DIR/NGINX/test.sh:/test.sh --entrypoint="/bin/bash" $DEBIAN_TEST /test.sh
+  tags:
+    - shell
+
+nginx-release:
+  stage: release
+  script:
+    - docker pull $DEBIAN_TEST
+    - docker tag $DEBIAN_TEST $DEBIAN_RELEASE
+    - docker push $DEBIAN_RELEASE
+  only:
+    - master
+  tags:
+    - shell
