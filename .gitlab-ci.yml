@@ -155,7 +155,7 @@ debian-test:
   stage: test
   script:
     - docker pull $DEBIAN_TEST
-    - docker run -v $CI_PROJECT_DIR/NGINX/test.sh:/test.sh --entrypoint="/bin/bash" $DEBIAN_TEST /test.sh
+    - docker run -v $CI_PROJECT_DIR/Debian/test.sh:/test.sh --entrypoint="/bin/bash" $DEBIAN_TEST /test.sh
   tags:
     - shell
 
