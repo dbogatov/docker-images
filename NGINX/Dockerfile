@@ -13,8 +13,6 @@ RUN apk --update add nginx bash ca-certificates s6 curl ssmtp \
 	\
     rm -rf /var/cache/apk/* && \
 	\
-    ln -s /usr/bin/php7 /usr/bin/php && \
-	\
 	mkdir -p /run/nginx && \
 	mkdir -p /run/php
 
