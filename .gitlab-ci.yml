@@ -4,7 +4,6 @@ stages:
   - release
 
 before_script:
-  #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.dbogatov.org
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
 
 variables:
@@ -147,7 +146,7 @@ nginx-release:
 debian-build:
   stage: build
   script:
-    - docker build --pull -t $DEBIAN_TEST NGINX
+    - docker build --pull -t $DEBIAN_TEST Debian
     - docker push $DEBIAN_TEST
   tags:
     - shell
