@@ -17,9 +17,9 @@ RUN apk upgrade --update \
 	&& gem install --no-document bundle \
 	&& gem install --no-document nokogiri \
 	&& rm -rf /root/src /tmp/* /usr/share/man /var/cache/apk/* \
-	&& \
-		apk del build-base zlib-dev ruby-dev readline-dev \
-		yaml-dev libffi-dev libxml2-dev \
+	# && \
+	# 	apk del build-base zlib-dev ruby-dev readline-dev \
+	# 	yaml-dev libffi-dev libxml2-dev \
  	&& apk search --update
 
 # Install gloabally Gulp task runner, Bower front-end manager and Broken Link Checker tool
