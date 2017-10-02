@@ -12,7 +12,7 @@ before_script:
 
 variables:
 
-  IMAGE: dbogatov/docker-images
+  IMAGE: dbogatov/docker-containers
 
   DEBIAN_TEST: $IMAGE:debian-$CI_BUILD_REF_NAME
   DEBIAN_RELEASE: $IMAGE:debian-latest
@@ -35,7 +35,7 @@ variables:
 debian-build:
   stage: build
   script:
-    - docker build --pull -t $DEBIAN_TEST images/
+    - docker build --pull -t $DEBIAN_TEST images/debian
     - docker push $DEBIAN_TEST
   tags:
     - shell
@@ -44,7 +44,7 @@ debian-test:
   stage: test
   script:
     - docker pull $DEBIAN_TEST
-    - docker run -v $CI_PROJECT_DIR/images//test.sh:/test.sh --entrypoint="/bin/bash" $DEBIAN_TEST /test.sh
+    - docker run -v $CI_PROJECT_DIR/images/debian/test.sh:/test.sh --entrypoint="/bin/bash" $DEBIAN_TEST /test.sh
   tags:
     - shell
 
@@ -65,7 +65,7 @@ debian-release:
 jekyll-build:
   stage: build
   script:
-    - docker build --pull -t $JEKYLL_TEST images/
+    - docker build --pull -t $JEKYLL_TEST images/jekyll
     - docker push $JEKYLL_TEST
   tags:
     - shell
@@ -74,7 +74,7 @@ jekyll-test:
   stage: test
   script:
     - docker pull $JEKYLL_TEST
-    - docker run -v $CI_PROJECT_DIR/images//test.sh:/test.sh --entrypoint="/bin/bash" $JEKYLL_TEST /test.sh
+    - docker run -v $CI_PROJECT_DIR/images/jekyll/test.sh:/test.sh --entrypoint="/bin/bash" $JEKYLL_TEST /test.sh
   tags:
     - shell
 
@@ -95,7 +95,7 @@ jekyll-release:
 mk-docs-build:
   stage: build
   script:
-    - docker build --pull -t $MK_DOCS_TEST images/
+    - docker build --pull -t $MK_DOCS_TEST images/mk-docs
     - docker push $MK_DOCS_TEST
   tags:
     - shell
@@ -104,7 +104,7 @@ mk-docs-test:
   stage: test
   script:
     - docker pull $MK_DOCS_TEST
-    - docker run -v $CI_PROJECT_DIR/images//test.sh:/test.sh --entrypoint="/bin/bash" $MK_DOCS_TEST /test.sh
+    - docker run -v $CI_PROJECT_DIR/images/mk-docs/test.sh:/test.sh --entrypoint="/bin/bash" $MK_DOCS_TEST /test.sh
   tags:
     - shell
 
@@ -125,7 +125,7 @@ mk-docs-release:
 net-core-build:
   stage: build
   script:
-    - docker build --pull -t $NET_CORE_TEST images/
+    - docker build --pull -t $NET_CORE_TEST images/net-core
     - docker push $NET_CORE_TEST
   tags:
     - shell
@@ -134,7 +134,7 @@ net-core-test:
   stage: test
   script:
     - docker pull $NET_CORE_TEST
-    - docker run -v $CI_PROJECT_DIR/images//test.sh:/test.sh --entrypoint="/bin/bash" $NET_CORE_TEST /test.sh
+    - docker run -v $CI_PROJECT_DIR/images/net-core/test.sh:/test.sh --entrypoint="/bin/bash" $NET_CORE_TEST /test.sh
   tags:
     - shell
 
@@ -155,7 +155,7 @@ net-core-release:
 nginx-build:
   stage: build
   script:
-    - docker build --pull -t $NGINX_TEST images/
+    - docker build --pull -t $NGINX_TEST images/nginx
     - docker push $NGINX_TEST
   tags:
     - shell
@@ -164,7 +164,7 @@ nginx-test:
   stage: test
   script:
     - docker pull $NGINX_TEST
-    - docker run -v $CI_PROJECT_DIR/images//test.sh:/test.sh --entrypoint="/bin/bash" $NGINX_TEST /test.sh
+    - docker run -v $CI_PROJECT_DIR/images/nginx/test.sh:/test.sh --entrypoint="/bin/bash" $NGINX_TEST /test.sh
   tags:
     - shell
 

@@ -147,7 +147,7 @@ run-loop () {
 		VARIABLE=$( echo ${IMAGES[i]%/} | awk '{print toupper($0)}' | tr -s '-' | tr '-' '_' )
 		DIRECTORY=${IMAGES[i]%/}
 
-		$1  $SHORT $VARIABLE
+		$1  $SHORT $VARIABLE $DIRECTORY
 		
 	done
 
