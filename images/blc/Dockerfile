@@ -8,4 +8,4 @@ RUN apk upgrade --update \
  	&& apk search --update
 
 # Install gloabally Broken Link Checker tool and simple http server
-RUN npm install broken-link-checker@0.7.3 http-server
+RUN npm install -g broken-link-checker@0.7.3 http-server
