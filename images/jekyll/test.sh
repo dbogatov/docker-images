@@ -7,7 +7,4 @@ jekyll --version
 npm --version
 gulp --version
 bower --version
-blc --version
-tidy --version
 bundle --version
-http-server --help > /dev/null
