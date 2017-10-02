@@ -14,6 +14,9 @@ variables:
 
   IMAGE: dbogatov/docker-containers
 
+  BLC_TEST: $IMAGE:blc-$CI_BUILD_REF_NAME
+  BLC_RELEASE: $IMAGE:blc-latest
+
   DEBIAN_TEST: $IMAGE:debian-$CI_BUILD_REF_NAME
   DEBIAN_RELEASE: $IMAGE:debian-latest
 
@@ -28,6 +31,39 @@ variables:
 
   NGINX_TEST: $IMAGE:nginx-$CI_BUILD_REF_NAME
   NGINX_RELEASE: $IMAGE:nginx-latest
+
+  TIDY_TEST: $IMAGE:tidy-$CI_BUILD_REF_NAME
+  TIDY_RELEASE: $IMAGE:tidy-latest
+
+
+### BLC
+
+blc-build:
+  stage: build
+  script:
+    - docker build --pull -t $BLC_TEST images/blc
+    - docker push $BLC_TEST
+  tags:
+    - shell
+
+blc-test:
+  stage: test
+  script:
+    - docker pull $BLC_TEST
+    - docker run -v $CI_PROJECT_DIR/images/blc/test.sh:/test.sh --entrypoint="/bin/bash" $BLC_TEST /test.sh
+  tags:
+    - shell
+
+blc-release:
+  stage: release
+  script:
+    - docker pull $BLC_TEST
+    - docker tag $BLC_TEST $BLC_RELEASE
+    - docker push $BLC_RELEASE
+  only:
+    - master
+  tags:
+    - shell
 
 
 ### DEBIAN
@@ -174,6 +210,36 @@ nginx-release:
     - docker pull $NGINX_TEST
     - docker tag $NGINX_TEST $NGINX_RELEASE
     - docker push $NGINX_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### TIDY
+
+tidy-build:
+  stage: build
+  script:
+    - docker build --pull -t $TIDY_TEST images/tidy
+    - docker push $TIDY_TEST
+  tags:
+    - shell
+
+tidy-test:
+  stage: test
+  script:
+    - docker pull $TIDY_TEST
+    - docker run -v $CI_PROJECT_DIR/images/tidy/test.sh:/test.sh --entrypoint="/bin/bash" $TIDY_TEST /test.sh
+  tags:
+    - shell
+
+tidy-release:
+  stage: release
+  script:
+    - docker pull $TIDY_TEST
+    - docker tag $TIDY_TEST $TIDY_RELEASE
+    - docker push $TIDY_RELEASE
   only:
     - master
   tags:
