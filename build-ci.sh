@@ -105,7 +105,7 @@ build-variables () {
 	cat >> $FILENAME <<BV
 variables:
 
-  IMAGE: dbogatov/docker-containers
+  IMAGE: dbogatov/docker-images
 
 BV
 
