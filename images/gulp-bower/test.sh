@@ -6,3 +6,4 @@ set -e
 npm --version
 gulp --version
 bower --version
+git --version

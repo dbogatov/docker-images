@@ -5,3 +5,4 @@ In this image:
 * Gulp (latest)
 * Bash
 * Bower (latest)
+* Git
