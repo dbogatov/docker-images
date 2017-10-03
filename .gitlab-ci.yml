@@ -20,6 +20,9 @@ variables:
   DEBIAN_TEST: $IMAGE:debian-$CI_BUILD_REF_NAME
   DEBIAN_RELEASE: $IMAGE:debian-latest
 
+  GULP_BOWER_TEST: $IMAGE:gulp-bower-$CI_BUILD_REF_NAME
+  GULP_BOWER_RELEASE: $IMAGE:gulp-bower-latest
+
   JEKYLL_TEST: $IMAGE:jekyll-$CI_BUILD_REF_NAME
   JEKYLL_RELEASE: $IMAGE:jekyll-latest
 
@@ -90,6 +93,36 @@ debian-release:
     - docker pull $DEBIAN_TEST
     - docker tag $DEBIAN_TEST $DEBIAN_RELEASE
     - docker push $DEBIAN_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### GULP-BOWER
+
+gulp-bower-build:
+  stage: build
+  script:
+    - docker build --pull -t $GULP_BOWER_TEST images/gulp-bower
+    - docker push $GULP_BOWER_TEST
+  tags:
+    - shell
+
+gulp-bower-test:
+  stage: test
+  script:
+    - docker pull $GULP_BOWER_TEST
+    - docker run -v $CI_PROJECT_DIR/images/gulp-bower/test.sh:/test.sh --entrypoint="/bin/bash" $GULP_BOWER_TEST /test.sh
+  tags:
+    - shell
+
+gulp-bower-release:
+  stage: release
+  script:
+    - docker pull $GULP_BOWER_TEST
+    - docker tag $GULP_BOWER_TEST $GULP_BOWER_RELEASE
+    - docker push $GULP_BOWER_RELEASE
   only:
     - master
   tags:
