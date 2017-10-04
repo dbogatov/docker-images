@@ -3,6 +3,10 @@ FROM wichon/alpine-apache-php:latest
 MAINTAINER Dmytro Bogatov dmytro@dbogatov.org
 
 RUN \
+	apk --update add bash && \
+	\
+    rm -rf /var/cache/apk/* && \
+	\
 	sed -i 's/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/' /etc/apache2/httpd.conf && \
 	sed -i 's/#LoadModule\ deflate_module/LoadModule\ deflate_module/' /etc/apache2/httpd.conf && \
 	sed -i 's/#LoadModule\ expires_module/LoadModule\ expires_module/' /etc/apache2/httpd.conf && \
