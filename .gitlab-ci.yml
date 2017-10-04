@@ -35,6 +35,9 @@ variables:
   NGINX_TEST: $IMAGE:nginx-$CI_BUILD_REF_NAME
   NGINX_RELEASE: $IMAGE:nginx-latest
 
+  PHP_TEST: $IMAGE:php-$CI_BUILD_REF_NAME
+  PHP_RELEASE: $IMAGE:php-latest
+
   TIDY_TEST: $IMAGE:tidy-$CI_BUILD_REF_NAME
   TIDY_RELEASE: $IMAGE:tidy-latest
 
@@ -243,6 +246,36 @@ nginx-release:
     - docker pull $NGINX_TEST
     - docker tag $NGINX_TEST $NGINX_RELEASE
     - docker push $NGINX_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### PHP
+
+php-build:
+  stage: build
+  script:
+    - docker build --pull -t $PHP_TEST images/php
+    - docker push $PHP_TEST
+  tags:
+    - shell
+
+php-test:
+  stage: test
+  script:
+    - docker pull $PHP_TEST
+    - docker run -v $CI_PROJECT_DIR/images/php/test.sh:/test.sh --entrypoint="/bin/bash" $PHP_TEST /test.sh
+  tags:
+    - shell
+
+php-release:
+  stage: release
+  script:
+    - docker pull $PHP_TEST
+    - docker tag $PHP_TEST $PHP_RELEASE
+    - docker push $PHP_RELEASE
   only:
     - master
   tags:
