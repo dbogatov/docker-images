@@ -14,6 +14,9 @@ variables:
 
   IMAGE: dbogatov/docker-images
 
+  ALPINE_EXTRAS_TEST: $IMAGE:alpine-extras-$CI_BUILD_REF_NAME
+  ALPINE_EXTRAS_RELEASE: $IMAGE:alpine-extras-latest
+
   BLC_TEST: $IMAGE:blc-$CI_BUILD_REF_NAME
   BLC_RELEASE: $IMAGE:blc-latest
 
@@ -40,6 +43,36 @@ variables:
 
   TIDY_TEST: $IMAGE:tidy-$CI_BUILD_REF_NAME
   TIDY_RELEASE: $IMAGE:tidy-latest
+
+
+### ALPINE-EXTRAS
+
+alpine-extras-build:
+  stage: build
+  script:
+    - docker build --pull -t $ALPINE_EXTRAS_TEST images/alpine-extras
+    - docker push $ALPINE_EXTRAS_TEST
+  tags:
+    - shell
+
+alpine-extras-test:
+  stage: test
+  script:
+    - docker pull $ALPINE_EXTRAS_TEST
+    - docker run -v $CI_PROJECT_DIR/images/alpine-extras/test.sh:/test.sh --entrypoint="/bin/bash" $ALPINE_EXTRAS_TEST /test.sh
+  tags:
+    - shell
+
+alpine-extras-release:
+  stage: release
+  script:
+    - docker pull $ALPINE_EXTRAS_TEST
+    - docker tag $ALPINE_EXTRAS_TEST $ALPINE_EXTRAS_RELEASE
+    - docker push $ALPINE_EXTRAS_RELEASE
+  only:
+    - master
+  tags:
+    - shell
 
 
 ### BLC
