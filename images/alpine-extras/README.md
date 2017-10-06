@@ -3,6 +3,8 @@
 In this image:
 * Alpine (latest)
 * curl (latest)
-* bash  (latest)
-* unzip  (latest)
+* bash (latest)
+* unzip (latest)
 * ca-certificates (latest)
+* openssh (latest)
+* sshpass (latest)

@@ -6,3 +6,6 @@ set -e
 unzip -hh
 curl --version
 bash --version
+which ssh
+which scp
+sshpass -V
