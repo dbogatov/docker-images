@@ -20,6 +20,9 @@ variables:
   BLC_TEST: $IMAGE:blc-$CI_BUILD_REF_NAME
   BLC_RELEASE: $IMAGE:blc-latest
 
+  CSPELL_TEST: $IMAGE:cspell-$CI_BUILD_REF_NAME
+  CSPELL_RELEASE: $IMAGE:cspell-latest
+
   DEBIAN_TEST: $IMAGE:debian-$CI_BUILD_REF_NAME
   DEBIAN_RELEASE: $IMAGE:debian-latest
 
@@ -99,6 +102,36 @@ blc-release:
     - docker pull $BLC_TEST
     - docker tag $BLC_TEST $BLC_RELEASE
     - docker push $BLC_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### CSPELL
+
+cspell-build:
+  stage: build
+  script:
+    - docker build --pull -t $CSPELL_TEST images/cspell
+    - docker push $CSPELL_TEST
+  tags:
+    - shell
+
+cspell-test:
+  stage: test
+  script:
+    - docker pull $CSPELL_TEST
+    - docker run -v $CI_PROJECT_DIR/images/cspell/test.sh:/test.sh --entrypoint="/bin/bash" $CSPELL_TEST /test.sh
+  tags:
+    - shell
+
+cspell-release:
+  stage: release
+  script:
+    - docker pull $CSPELL_TEST
+    - docker tag $CSPELL_TEST $CSPELL_RELEASE
+    - docker push $CSPELL_RELEASE
   only:
     - master
   tags:
