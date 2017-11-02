@@ -5,3 +5,4 @@ set -e
 
 npm --version
 cspell --version
+git --version

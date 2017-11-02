@@ -3,7 +3,7 @@ MAINTAINER Dmytro Bogatov
 
 # Install Bash
 RUN apk upgrade --update \
-	&& apk add bash \
+	&& apk add bash git \
 	&& rm -rf /root/src /tmp/* /usr/share/man /var/cache/apk/* \
  	&& apk search --update
 
