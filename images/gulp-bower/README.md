@@ -1,7 +1,7 @@
 # Gulp + Bower
 
 In this image:
-* NodeJS _ NPM
+* NodeJS / NPM
 * Gulp (latest)
 * Bash
 * Bower (latest)
