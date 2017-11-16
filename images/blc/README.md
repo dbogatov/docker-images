@@ -2,6 +2,6 @@
 
 In this image:
 * NodeJS v7
-* Broken Link Checker (0.7.3)
+* Broken Link Checker (latest)
 * Bash
 * http server (NPM)
