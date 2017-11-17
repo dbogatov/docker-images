@@ -41,6 +41,9 @@ variables:
   NGINX_TEST: $IMAGE:nginx-$CI_BUILD_REF_NAME
   NGINX_RELEASE: $IMAGE:nginx-latest
 
+  NODE_TEST: $IMAGE:node-$CI_BUILD_REF_NAME
+  NODE_RELEASE: $IMAGE:node-latest
+
   PHP_TEST: $IMAGE:php-$CI_BUILD_REF_NAME
   PHP_RELEASE: $IMAGE:php-latest
 
@@ -312,6 +315,36 @@ nginx-release:
     - docker pull $NGINX_TEST
     - docker tag $NGINX_TEST $NGINX_RELEASE
     - docker push $NGINX_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### NODE
+
+node-build:
+  stage: build
+  script:
+    - docker build --pull -t $NODE_TEST images/node
+    - docker push $NODE_TEST
+  tags:
+    - shell
+
+node-test:
+  stage: test
+  script:
+    - docker pull $NODE_TEST
+    - docker run -v $CI_PROJECT_DIR/images/node/test.sh:/test.sh --entrypoint="/bin/bash" $NODE_TEST /test.sh
+  tags:
+    - shell
+
+node-release:
+  stage: release
+  script:
+    - docker pull $NODE_TEST
+    - docker tag $NODE_TEST $NODE_RELEASE
+    - docker push $NODE_RELEASE
   only:
     - master
   tags:
