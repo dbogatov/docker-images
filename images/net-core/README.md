@@ -6,6 +6,6 @@ In this image:
 * Doxygen (latest on apt-get repos)
 * Gulp (latest on NPM)
 * Bower (latest on NPM)
-* Broken Link Checker (latest on NPM)
+* Broken Link Checker (0.7.3)
 * HTML Tidy 5.2.0
 * Yarn
