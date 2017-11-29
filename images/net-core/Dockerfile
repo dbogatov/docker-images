@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1-sdk-msbuild
+FROM microsoft/dotnet:2.0.3-sdk
 
 # Add NodeJS repo
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -

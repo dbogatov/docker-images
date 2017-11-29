@@ -1,7 +1,7 @@
 # .NET Core SDK + Dev dependencies
 
 In this image:
-* .NET Core SDK 1.1 with MSBuild (not `project.json`)
+* .NET Core SDK 2.0.3 with MSBuild (not `project.json`)
 * NodeJS v7
 * Doxygen (latest on apt-get repos)
 * Gulp (latest on NPM)
