@@ -2,7 +2,7 @@
 
 In this image:
 * .NET Core SDK 2.0.3 with MSBuild (not `project.json`)
-* NodeJS v7
+* NodeJS v8
 * Doxygen (latest on apt-get repos)
 * Gulp (latest on NPM)
 * Bower (latest on NPM)
