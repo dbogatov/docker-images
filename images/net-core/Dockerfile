@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:2.0.3-sdk
 
 # Add NodeJS repo
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
 # Install NodeJS and Doxygen
 RUN apt-get install -y nodejs doxygen
