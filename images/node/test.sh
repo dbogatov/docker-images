@@ -5,3 +5,4 @@ set -e
 
 npm --version
 node --version
+http-server --help
