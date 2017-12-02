@@ -32,6 +32,9 @@ variables:
   JEKYLL_TEST: $IMAGE:jekyll-$CI_BUILD_REF_NAME
   JEKYLL_RELEASE: $IMAGE:jekyll-latest
 
+  LATEX_TEST: $IMAGE:latex-$CI_BUILD_REF_NAME
+  LATEX_RELEASE: $IMAGE:latex-latest
+
   MK_DOCS_TEST: $IMAGE:mk-docs-$CI_BUILD_REF_NAME
   MK_DOCS_RELEASE: $IMAGE:mk-docs-latest
 
@@ -225,6 +228,36 @@ jekyll-release:
     - docker pull $JEKYLL_TEST
     - docker tag $JEKYLL_TEST $JEKYLL_RELEASE
     - docker push $JEKYLL_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### LATEX
+
+latex-build:
+  stage: build
+  script:
+    - docker build --pull -t $LATEX_TEST images/latex
+    - docker push $LATEX_TEST
+  tags:
+    - shell
+
+latex-test:
+  stage: test
+  script:
+    - docker pull $LATEX_TEST
+    - docker run -v $CI_PROJECT_DIR/images/latex/test.sh:/test.sh --entrypoint="/bin/bash" $LATEX_TEST /test.sh
+  tags:
+    - shell
+
+latex-release:
+  stage: release
+  script:
+    - docker pull $LATEX_TEST
+    - docker tag $LATEX_TEST $LATEX_RELEASE
+    - docker push $LATEX_RELEASE
   only:
     - master
   tags:
