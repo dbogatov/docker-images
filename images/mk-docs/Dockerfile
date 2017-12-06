@@ -1,4 +1,4 @@
-FROM mhart/alpine-node
+FROM node:8.9.1-alpine
 MAINTAINER Dmytro Bogatov
 
 RUN apk upgrade --update \
