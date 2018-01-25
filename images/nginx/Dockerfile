@@ -8,7 +8,7 @@ RUN apk --update add nginx bash ca-certificates s6 curl ssmtp \
 	\
     rm -rf /var/cache/apk/* && \
 	\
-	mkdir -p /run/nginx \
+	mkdir -p /run/nginx && \
 	\
 	rm /etc/nginx/conf.d/*
 
