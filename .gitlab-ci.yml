@@ -38,6 +38,9 @@ variables:
   MK_DOCS_TEST: $IMAGE:mk-docs-$CI_BUILD_REF_NAME
   MK_DOCS_RELEASE: $IMAGE:mk-docs-latest
 
+  NET_CORE_OLD_TEST: $IMAGE:net-core-old-$CI_BUILD_REF_NAME
+  NET_CORE_OLD_RELEASE: $IMAGE:net-core-old-latest
+
   NET_CORE_TEST: $IMAGE:net-core-$CI_BUILD_REF_NAME
   NET_CORE_RELEASE: $IMAGE:net-core-latest
 
@@ -288,6 +291,36 @@ mk-docs-release:
     - docker pull $MK_DOCS_TEST
     - docker tag $MK_DOCS_TEST $MK_DOCS_RELEASE
     - docker push $MK_DOCS_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### NET-CORE-OLD
+
+net-core-old-build:
+  stage: build
+  script:
+    - docker build --pull -t $NET_CORE_OLD_TEST images/net-core-old
+    - docker push $NET_CORE_OLD_TEST
+  tags:
+    - shell
+
+net-core-old-test:
+  stage: test
+  script:
+    - docker pull $NET_CORE_OLD_TEST
+    - docker run -v $CI_PROJECT_DIR/images/net-core-old/test.sh:/test.sh --entrypoint="/bin/bash" $NET_CORE_OLD_TEST /test.sh
+  tags:
+    - shell
+
+net-core-old-release:
+  stage: release
+  script:
+    - docker pull $NET_CORE_OLD_TEST
+    - docker tag $NET_CORE_OLD_TEST $NET_CORE_OLD_RELEASE
+    - docker push $NET_CORE_OLD_RELEASE
   only:
     - master
   tags:
