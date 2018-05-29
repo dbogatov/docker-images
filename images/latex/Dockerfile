@@ -7,7 +7,7 @@ RUN apt-get update \
 	\
 	&& wget https://github.com/carrois/Fira/archive/c503516bcb54412d540a2e33efd1cc29f7dcce87.zip \
 	\
-	&& unzip master.zip \
+	&& unzip c503516bcb54412d540a2e33efd1cc29f7dcce87.zip \
 	\
 	&& mkdir -p /usr/share/fonts/opentype/fira_code \
 	&& mkdir -p /usr/share/fonts/opentype/fira_mono \
