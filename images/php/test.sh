@@ -3,4 +3,4 @@ set -e
 
 # Script to test the image
 
-php -v
+php5 -v
