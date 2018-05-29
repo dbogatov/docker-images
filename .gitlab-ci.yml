@@ -26,6 +26,9 @@ variables:
   DEBIAN_TEST: $IMAGE:debian-$CI_BUILD_REF_NAME
   DEBIAN_RELEASE: $IMAGE:debian-latest
 
+  DOXYGEN_TEST: $IMAGE:doxygen-$CI_BUILD_REF_NAME
+  DOXYGEN_RELEASE: $IMAGE:doxygen-latest
+
   GULP_BOWER_TEST: $IMAGE:gulp-bower-$CI_BUILD_REF_NAME
   GULP_BOWER_RELEASE: $IMAGE:gulp-bower-latest
 
@@ -171,6 +174,36 @@ debian-release:
     - docker pull $DEBIAN_TEST
     - docker tag $DEBIAN_TEST $DEBIAN_RELEASE
     - docker push $DEBIAN_RELEASE
+  only:
+    - master
+  tags:
+    - shell
+
+
+### DOXYGEN
+
+doxygen-build:
+  stage: build
+  script:
+    - docker build --pull -t $DOXYGEN_TEST images/doxygen
+    - docker push $DOXYGEN_TEST
+  tags:
+    - shell
+
+doxygen-test:
+  stage: test
+  script:
+    - docker pull $DOXYGEN_TEST
+    - docker run -v $CI_PROJECT_DIR/images/doxygen/test.sh:/test.sh --entrypoint="/bin/bash" $DOXYGEN_TEST /test.sh
+  tags:
+    - shell
+
+doxygen-release:
+  stage: release
+  script:
+    - docker pull $DOXYGEN_TEST
+    - docker tag $DOXYGEN_TEST $DOXYGEN_RELEASE
+    - docker push $DOXYGEN_RELEASE
   only:
     - master
   tags:
