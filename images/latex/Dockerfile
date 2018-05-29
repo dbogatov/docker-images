@@ -5,7 +5,7 @@ MAINTAINER Dmytro Bogatov
 RUN apt-get update \
 	&& apt-get install -y wget unzip \
 	\
-	&& wget https://github.com/carrois/Fira/archive/master.zip \
+	&& wget https://github.com/carrois/Fira/archive/c503516bcb54412d540a2e33efd1cc29f7dcce87.zip \
 	\
 	&& unzip master.zip \
 	\
@@ -13,8 +13,7 @@ RUN apt-get update \
 	&& mkdir -p /usr/share/fonts/opentype/fira_mono \
 	&& mkdir -p /usr/share/fonts/opentype/fira_sans \
 	\
-	&& cp FiraSans-master/Fira_Code_*/Fonts/FiraCode_OTF_32/* /usr/share/fonts/opentype/fira_code \
-	&& cp FiraSans-master/Fira_Mono_*/Fonts/FiraMono_OTF_32/* /usr/share/fonts/opentype/fira_mono \
-	&& cp FiraSans-master/Fira_Sans_*/Fonts/FiraSans_OTF_*/Normal/Roman/* /usr/share/fonts/opentype/fira_sans \
-	&& cp FiraSans-master/Fira_Sans_*/Fonts/FiraSans_OTF_*/Normal/Italic/* /usr/share/fonts/opentype/fira_sans
-
+	&& cp Fira-master/Fira_Code_3_2/Fonts/FiraCode_OTF_32/* /usr/share/fonts/opentype/fira_code \
+	&& cp Fira-master/Fira_Mono_3_2/Fonts/FiraMono_OTF_32/* /usr/share/fonts/opentype/fira_mono \
+	&& cp Fira-master/Fira_Sans_4_2/Fonts/FiraSans_OTF_4203/Normal/Roman/* /usr/share/fonts/opentype/fira_sans \
+	&& cp Fira-master/Fira_Sans_4_2/Fonts/FiraSans_OTF_4203/Normal/Italic/* /usr/share/fonts/opentype/fira_sans
