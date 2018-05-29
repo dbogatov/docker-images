@@ -15,5 +15,5 @@ RUN apt-get update \
 	\
 	&& cp FiraSans-c503516bcb54412d540a2e33efd1cc29f7dcce87/Fira_Code_3_2/Fonts/FiraCode_OTF_32/* /usr/share/fonts/opentype/fira_code \
 	&& cp FiraSans-c503516bcb54412d540a2e33efd1cc29f7dcce87/Fira_Mono_3_2/Fonts/FiraMono_OTF_32/* /usr/share/fonts/opentype/fira_mono \
-	&& cp FiraSans-c503516bcb54412d540a2e33efd1cc29f7dcce87/Fira_Sans_4_2/Fonts/FiraSans_OTF_4203/Normal/Roman/* /usr/share/fonts/opentype/fira_sans \
-	&& cp FiraSans-c503516bcb54412d540a2e33efd1cc29f7dcce87/Fira_Sans_4_2/Fonts/FiraSans_OTF_4203/Normal/Italic/* /usr/share/fonts/opentype/fira_sans
+	&& cp FiraSans-c503516bcb54412d540a2e33efd1cc29f7dcce87/Fira_Sans_4_2/Fonts/FiraSans_OTF_4202/Normal/Roman/* /usr/share/fonts/opentype/fira_sans \
+	&& cp FiraSans-c503516bcb54412d540a2e33efd1cc29f7dcce87/Fira_Sans_4_2/Fonts/FiraSans_OTF_4202/Normal/Italic/* /usr/share/fonts/opentype/fira_sans
