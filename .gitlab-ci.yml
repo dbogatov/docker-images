@@ -86,6 +86,17 @@ check-readme-file:
   tags:
     - docker
 
+### LINT sources check
+
+check-sources:
+  before_script: []
+  stage: lint
+  image: dbogatov/docker-images:alpine-extras-latest
+  script:
+    - ./check-sources.sh
+  tags:
+    - docker
+
 
 ### ALPINE-EXTRAS
 

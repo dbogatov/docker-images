@@ -167,6 +167,24 @@ BL
 
 }
 
+build-sources-check () {
+
+	cat >> $CI <<BSC
+### LINT sources check
+
+check-sources:
+  before_script: []
+  stage: lint
+  image: dbogatov/docker-images:alpine-extras-latest
+  script:
+    - ./check-sources.sh
+  tags:
+    - docker
+
+BSC
+
+}
+
 
 #
 # 1 - command
@@ -208,6 +226,8 @@ run-loop build-variable-tuple
 
 build-lint $CI "ci"
 build-lint $README "readme"
+
+build-sources-check
 
 run-loop build-image-blocks
 
