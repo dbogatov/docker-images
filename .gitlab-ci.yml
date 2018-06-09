@@ -3,6 +3,7 @@
 ### USE ./build-ci.sh INSTEAD
 
 stages:
+  - lint
   - build
   - test
   - release
@@ -58,6 +59,19 @@ variables:
 
   TIDY_TEST: $IMAGE:tidy-$CI_BUILD_REF_NAME
   TIDY_RELEASE: $IMAGE:tidy-latest
+
+### LINT
+
+check-ci-file:
+  before_script: []
+  stage: lint
+  image: dbogatov/docker-images:alpine-extras-latest
+  script:
+    - mv .gitlab-ci.yml actual.yml
+    - ./build-ci.sh
+    - diff -q actual.yml .gitlab-ci.yml
+  tags:
+    - docker
 
 
 ### ALPINE-EXTRAS

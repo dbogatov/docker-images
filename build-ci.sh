@@ -92,7 +92,7 @@ BIB
 #
 build-variable-tuple () {
 
-		cat >> $FILENAME <<BVT
+	cat >> $FILENAME <<BVT
   $2_TEST: \$IMAGE:$1-\$CI_BUILD_REF_NAME
   $2_RELEASE: \$IMAGE:$1-latest
 
@@ -115,12 +115,13 @@ build-preamble () {
 
 	touch $FILENAME
 
-		cat > $FILENAME <<BP
+	cat > $FILENAME <<BP
 ### THIS FILE IS GENERATED AUTOMATICALLY
 ### DO NOT MODIFY IT DIRECTLY
 ### USE ./build-ci.sh INSTEAD
 
 stages:
+  - lint
   - build
   - test
   - release
@@ -129,6 +130,26 @@ before_script:
   - docker login -u \$DOCKER_USER -p \$DOCKER_PASS
 
 BP
+
+}
+
+build-lint () {
+
+	cat >> $FILENAME <<BL
+### LINT
+
+check-ci-file:
+  before_script: []
+  stage: lint
+  image: dbogatov/docker-images:alpine-extras-latest
+  script:
+    - mv .gitlab-ci.yml actual.yml
+    - ./build-ci.sh
+    - diff -q actual.yml .gitlab-ci.yml
+  tags:
+    - docker
+
+BL
 
 }
 
@@ -164,6 +185,9 @@ IMAGES=(*/)
 cd ..
 
 run-loop build-variable-tuple
+
+build-lint
+
 run-loop build-image-blocks
 
 echo "Done."
