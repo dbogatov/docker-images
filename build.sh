@@ -136,15 +136,17 @@ BP
 
 #
 # 1 - file
+# 2 - short description
 #
 build-lint () {
 
 	FILE=$1
+	SHORT=$2
 
 	cat >> $CI <<BL
-### LINT $FILE
+### LINT $SHORT
 
-check-ci-file:
+check-$SHORT-file:
   before_script: []
   stage: lint
   image: dbogatov/docker-images:alpine-extras-latest
@@ -198,8 +200,8 @@ cd ..
 
 run-loop build-variable-tuple
 
-build-lint $CI
-build-lint $README
+build-lint $CI "ci"
+build-lint $README "readme"
 
 run-loop build-image-blocks
 

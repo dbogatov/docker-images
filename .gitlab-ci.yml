@@ -1,6 +1,6 @@
 ### THIS FILE IS GENERATED AUTOMATICALLY
 ### DO NOT MODIFY IT DIRECTLY
-### USE ./build.sh INSTEAD
+### USE ./build-ci.sh INSTEAD
 
 stages:
   - lint
@@ -60,7 +60,7 @@ variables:
   TIDY_TEST: $IMAGE:tidy-$CI_BUILD_REF_NAME
   TIDY_RELEASE: $IMAGE:tidy-latest
 
-### LINT .gitlab-ci.yml
+### LINT ci
 
 check-ci-file:
   before_script: []
@@ -73,9 +73,9 @@ check-ci-file:
   tags:
     - docker
 
-### LINT README.md
+### LINT readme
 
-check-ci-file:
+check-readme-file:
   before_script: []
   stage: lint
   image: dbogatov/docker-images:alpine-extras-latest
