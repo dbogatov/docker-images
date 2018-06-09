@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-FILENAME=".gitlab-ci.yml"
+CI=".gitlab-ci.yml"
+README="README.md"
 
 #
 # 1 - shortname
@@ -10,7 +11,7 @@ FILENAME=".gitlab-ci.yml"
 #
 build-build-block () {
 
-	cat >> $FILENAME <<BBB
+	cat >> $CI <<BBB
 $1-build:
   stage: build
   script:
@@ -30,7 +31,7 @@ BBB
 #
 build-test-block () {
 
-	cat >> $FILENAME <<BTB
+	cat >> $CI <<BTB
 $1-test:
   stage: test
   script:
@@ -49,7 +50,7 @@ BTB
 #
 build-release-block () {
 
-	cat >> $FILENAME <<BRB
+	cat >> $CI <<BRB
 $1-release:
   stage: release
   script:
@@ -72,7 +73,7 @@ BRB
 #
 build-image-blocks () {
 
-	cat >> $FILENAME <<BIB
+	cat >> $CI <<BIB
 
 ### $( echo ${1} | awk '{print toupper($0)}' )
 
@@ -92,7 +93,7 @@ BIB
 #
 build-variable-tuple () {
 
-	cat >> $FILENAME <<BVT
+	cat >> $CI <<BVT
   $2_TEST: \$IMAGE:$1-\$CI_BUILD_REF_NAME
   $2_RELEASE: \$IMAGE:$1-latest
 
@@ -102,7 +103,7 @@ BVT
 
 build-variables () {
 
-	cat >> $FILENAME <<BV
+	cat >> $CI <<BV
 variables:
 
   IMAGE: dbogatov/docker-images
@@ -113,9 +114,9 @@ BV
 
 build-preamble () {
 
-	touch $FILENAME
+	touch $CI
 
-	cat > $FILENAME <<BP
+	cat > $CI <<BP
 ### THIS FILE IS GENERATED AUTOMATICALLY
 ### DO NOT MODIFY IT DIRECTLY
 ### USE ./build-ci.sh INSTEAD
@@ -133,19 +134,24 @@ BP
 
 }
 
+#
+# 1 - file
+#
 build-lint () {
 
-	cat >> $FILENAME <<BL
-### LINT
+	FILE=$1
+
+	cat >> $CI <<BL
+### LINT $FILE
 
 check-ci-file:
   before_script: []
   stage: lint
   image: dbogatov/docker-images:alpine-extras-latest
   script:
-    - mv .gitlab-ci.yml actual.yml
-    - ./build-ci.sh
-    - diff -q actual.yml .gitlab-ci.yml
+    - mv $FILE actual
+    - ./build.sh
+    - diff -q actual $FILE
   tags:
     - docker
 
@@ -166,11 +172,17 @@ run-loop () {
 
 		SHORT=${IMAGES[i]%/}
 		VARIABLE=$( echo ${IMAGES[i]%/} | awk '{print toupper($0)}' | tr -s '-' | tr '-' '_' )
-		DIRECTORY=${IMAGES[i]%/}
 
-		$1  $SHORT $VARIABLE $DIRECTORY
+		$1 $SHORT $VARIABLE $SHORT
 		
 	done
+
+}
+
+generate-readme () {
+
+	printf "\n\n##" >> $README
+	cat "./images/$1/README.md" >> $README
 
 }
 
@@ -186,8 +198,17 @@ cd ..
 
 run-loop build-variable-tuple
 
-build-lint
+build-lint $CI
+build-lint $README
 
 run-loop build-image-blocks
+
+## GENERATE README
+
+touch $README
+
+cat README-preamble.md > $README
+
+run-loop generate-readme
 
 echo "Done."

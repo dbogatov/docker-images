@@ -1,6 +1,6 @@
 ### THIS FILE IS GENERATED AUTOMATICALLY
 ### DO NOT MODIFY IT DIRECTLY
-### USE ./build-ci.sh INSTEAD
+### USE ./build.sh INSTEAD
 
 stages:
   - lint
@@ -60,16 +60,29 @@ variables:
   TIDY_TEST: $IMAGE:tidy-$CI_BUILD_REF_NAME
   TIDY_RELEASE: $IMAGE:tidy-latest
 
-### LINT
+### LINT .gitlab-ci.yml
 
 check-ci-file:
   before_script: []
   stage: lint
   image: dbogatov/docker-images:alpine-extras-latest
   script:
-    - mv .gitlab-ci.yml actual.yml
-    - ./build-ci.sh
-    - diff -q actual.yml .gitlab-ci.yml
+    - mv .gitlab-ci.yml actual
+    - ./build.sh
+    - diff -q actual .gitlab-ci.yml
+  tags:
+    - docker
+
+### LINT README.md
+
+check-ci-file:
+  before_script: []
+  stage: lint
+  image: dbogatov/docker-images:alpine-extras-latest
+  script:
+    - mv README.md actual
+    - ./build.sh
+    - diff -q actual README.md
   tags:
     - docker
 
@@ -149,6 +162,17 @@ cspell-test:
   script:
     - docker pull $CSPELL_TEST
     - docker run -v $CI_PROJECT_DIR/images/cspell/test.sh:/test.sh --entrypoint="/bin/bash" $CSPELL_TEST /test.sh
+  tags:
+    - shell
+
+cspell-release:
+  stage: release
+  script:
+    - docker pull $CSPELL_TEST
+    - docker tag $CSPELL_TEST $CSPELL_RELEASE
+    - docker push $CSPELL_RELEASE
+  only:
+    - master
   tags:
     - shell
 
