@@ -1,4 +1,4 @@
-FROM tianon/latex
+FROM dbogatov/docker-sources:tianon-latex
 MAINTAINER Dmytro Bogatov
 
 # Install Fira Sans font

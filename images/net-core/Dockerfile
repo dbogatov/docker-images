@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0.3-sdk
+FROM dbogatov/docker-sources:microsoft-dotnet-2.1-sdk
 
 # Add NodeJS repo
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -

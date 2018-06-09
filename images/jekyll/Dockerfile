@@ -1,4 +1,4 @@
-FROM mhart/alpine-node
+FROM dbogatov/docker-sources:mhart-alpine-node
 MAINTAINER Dmytro Bogatov
 
 RUN apk upgrade --update \

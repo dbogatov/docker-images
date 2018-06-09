@@ -1,4 +1,4 @@
-FROM node:8.9.1-alpine
+FROM dbogatov/docker-sources:node-8.9.1-alpine
 MAINTAINER Dmytro Bogatov
 
 RUN apk upgrade --update \

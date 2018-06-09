@@ -1,4 +1,4 @@
-FROM wichon/alpine-apache-php:latest
+FROM dbogatov/docker-sources:wichon-alpine-apache-php
 
 MAINTAINER Dmytro Bogatov dmytro@dbogatov.org
 

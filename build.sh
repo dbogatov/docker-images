@@ -1,5 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
+
+shopt -s globstar
+
+# Ensure that the CWD is set to script's location
+cd "${0%/*}"
+CWD=$(pwd)
 
 CI=".gitlab-ci.yml"
 README="README.md"

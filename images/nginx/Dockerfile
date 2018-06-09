@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM dbogatov/docker-sources:alpine
 
 MAINTAINER Dmytro Bogatov dmytro@dbogatov.org
 

@@ -1,4 +1,4 @@
-FROM mhart/alpine-node
+FROM dbogatov/docker-sources:mhart-alpine-node
 MAINTAINER Dmytro Bogatov
 
 # Install Tidy HTML and Bash

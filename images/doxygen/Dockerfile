@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM dbogatov/docker-sources:alpine
 
 # Install Doxygen
 RUN apk upgrade --update \

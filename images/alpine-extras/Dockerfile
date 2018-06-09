@@ -1,4 +1,4 @@
-FROM alpine
+FROM dbogatov/docker-sources:alpine
 MAINTAINER Dmytro Bogatov
 
 # Install Bash, CURL, UNZIP and CA Certs
