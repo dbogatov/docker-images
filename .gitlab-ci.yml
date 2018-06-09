@@ -152,17 +152,6 @@ cspell-test:
   tags:
     - shell
 
-cspell-release:
-  stage: release
-  script:
-    - docker pull $CSPELL_TEST
-    - docker tag $CSPELL_TEST $CSPELL_RELEASE
-    - docker push $CSPELL_RELEASE
-  only:
-    - master
-  tags:
-    - shell
-
 
 ### DEBIAN
 
