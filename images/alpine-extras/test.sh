@@ -9,3 +9,5 @@ bash --version
 which ssh
 which scp
 sshpass -V
+make -v
+gcc -v
